@@ -8,10 +8,6 @@ import ExpenseDate from './ExpenseDate';
 import './ExpenseItem.css'; 
 
 function ExpenseItem(props) {
-  const month = props.date.toLocaleString('en-US', {month : 'long'});
-  const day = props.date.toLocaleString('en-US', {day : '2-digit'});
-  const year = props.date.getFullYear();
-
   return (
     // HTML 처럼 보이기는 하지만 리액트팀에서 만든 특별한 JSX구문이므로 여전히 자바스크립트 코드이다.
     // 그래서 속성들의 이름이 모두 똑같지 않다. class는 자바스크립트 예약어임으로 className으로 사용할 수 있다. 

@@ -1,2 +1,4 @@
-/node_modules
 package-lock.json
+react-guide/node_modules/
+starting-setup/node_modules/
+.idea/
