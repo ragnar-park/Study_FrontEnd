@@ -1,6 +1,6 @@
 import "./Card.css";
 
-function Card(props){ 
+const Card = (props) => { 
     // 사용자 지정 컴포넌트를 일종의 컨텐츠를 감싸는 래퍼로 사용할 수 없다.
     // 열고 닫는 태그 사이에 컨텐츠가있으면 작동이 안된다.
     // 내장된 html 요소인 <div> , <h2> 같은 요소는 사용 가능하다.
