@@ -3,23 +3,47 @@ import React, { useState } from 'react';
 import './ExpenseForm.css';
 
 const ExpenseForm = () => {
-      // 수신할 때 입력 요소값은 항상 문자열이다. 숫자를 저장해도 문자열로 된 숫자이고 날짜도 마찬가지이다. 그래서 항상 모든 상태 초기화를 문자열로 한다. -> useState('');
-    const [enteredTitle, setEnteredTitle] = useState(''); // 변경된 상태 저장
-    const [enteredAmount, setEnteredAmount] = useState('');
-    const [enteredDate, setEnteredDate] = useState('');
+    // 수신할 때 입력 요소값은 항상 문자열이다. 숫자를 저장해도 문자열로 된 숫자이고 날짜도 마찬가지이다. 그래서 항상 모든 상태 초기화를 문자열로 한다. -> useState('');
     // 컴포넌트당 하나 이상의 상태 저장 
     // 여러 개의 상태 조각들 또는 컴포넌트별로 상태 조각을 가질 수 있음
     // 같은 컴포넌트 안에 있는 이 모든 상태들은 완전히 별개의 것들임
+    // const [enteredTitle, setEnteredTitle] = useState(''); // 변경된 상태 저장
+    // const [enteredAmount, setEnteredAmount] = useState('');
+    // const [enteredDate, setEnteredDate] = useState('');
+    const [userInput, setUserInput] = useState({
+        enteredTitle: '',
+        enteredAmount: '',
+        enteredDate: ''
+    });
+        // 값으로 "객체"를 전달, 숫자열 x 문자열 x
+        // 한개의 state처럼 관리 
+        // 업데이트 마다 한개가 아닌 세 프로퍼티 모두를 업데이트 해야한다. 
+        // 하나의 state로 접근하고 하나의 객체를 관리하면 모든 데이터가 사리지지 않도록 해야함 
+
     const titleChangeHandler = (event) => {
-        setEnteredTitle(event.target.value);
+        // setEnteredTitle(event.target.value);
+        setUserInput({
+            ...userInput, // 객체를 취해서 모든 키와 값의 쌍을 추출하여 새로운 객체에 추가한다
+            enteredTitle: event.target.value,
+        });
+        // 새로운 사용자 입력을 객체에 설정하면 다른 키들은 버리게 된다. 
+        // 리액트는 state업데이트시 이전의 state와 병합하지 않는다
     };
 
     const amountChangeHandler = event => {
-        setEnteredAmount(event.target.value);
+        // setEnteredAmount(event.target.value);
+        setUserInput({
+            ...userInput, // 객체를 취해서 모든 키와 값의 쌍을 추출하여 새로운 객체에 추가한다
+            enteredAmount: event.target.value,
+        });
     };
 
     const dateChangeHandler = event => {
-        setEnteredDate(event.target.value);
+        // setEnteredDate(event.target.value);
+        setUserInput({
+            ...userInput, // 객체를 취해서 모든 키와 값의 쌍을 추출하여 새로운 객체에 추가한다
+            enteredDate: event.target.value,
+        });
     };
   
 
