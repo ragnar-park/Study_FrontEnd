@@ -35,6 +35,11 @@ const App= () => {
     },
   ];
 
+  const addExpenseHandler = expense => {
+    console.log('In App.js');
+    console.log(expense);
+  }
+
   // 명령형 접근 방식
   // const para = document.createElement('p');
   // para.textContent = 'This is also visble!';
@@ -43,7 +48,7 @@ const App= () => {
 
   return (
     <div>
-      <NewExpense />
+      <NewExpense onAddExpense={addExpenseHandler}/>
       <Expenses items={expenses} />
       {/* <p>This is also visble!</p> */}
 

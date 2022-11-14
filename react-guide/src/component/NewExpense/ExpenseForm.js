@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import './ExpenseForm.css';
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
     // 수신할 때 입력 요소값은 항상 문자열이다. 숫자를 저장해도 문자열로 된 숫자이고 날짜도 마찬가지이다. 그래서 항상 모든 상태 초기화를 문자열로 한다. -> useState('');
     // 컴포넌트당 하나 이상의 상태 저장 
     // 여러 개의 상태 조각들 또는 컴포넌트별로 상태 조각을 가질 수 있음
@@ -15,10 +15,10 @@ const ExpenseForm = () => {
     //     enteredAmount: '',
     //     enteredDate: ''
     // });
-        // 값으로 "객체"를 전달, 숫자열 x 문자열 x
-        // 한개의 state처럼 관리 
-        // 업데이트 마다 한개가 아닌 세 프로퍼티 모두를 업데이트 해야한다. 
-        // 하나의 state로 접근하고 하나의 객체를 관리하면 모든 데이터가 사리지지 않도록 해야함 
+    // 값으로 "객체"를 전달, 숫자열 x 문자열 x
+    // 한개의 state처럼 관리 
+    // 업데이트 마다 한개가 아닌 세 프로퍼티 모두를 업데이트 해야한다. 
+    // 하나의 state로 접근하고 하나의 객체를 관리하면 모든 데이터가 사리지지 않도록 해야함 
 
     const titleChangeHandler = (event) => {
         setEnteredTitle(event.target.value);
@@ -50,22 +50,40 @@ const ExpenseForm = () => {
         //     enteredDate: event.target.value,
         // });
     };
-  
+
+
+    const submitHandler = (event) => {
+        event.preventDefault(); // 이벤트를 막음으로 기본 요청이 보내지는 것을 막아 페이지가 다시 로드 되는 것을 막음
+
+        const expenseData = {
+            title: enteredTitle,
+            amount: enteredAmount,
+            date: new Date(enteredDate)
+        }
+
+        // console.log(expenseData);
+        props.onSaveExpenseData(expenseData); // NewExpense.js 에서 보낸 onSaveExpenseData가 여기서 실행된다
+        // 함수이기 때문에 실행 () 할 수 있다.
+        setEnteredTitle(''); 
+        setEnteredAmount('');
+        setEnteredDate('');
+        // 폼이 전송되고 난 후에 입력했던 것을 오버라이드 하여 입력 부분을 지운다
+    };
 
     return (
-        <form>
+        <form onSubmit={submitHandler}>
             <div className='new-expense__controls'>
                 <div className='new-expense__control'>
                     <label>Title</label>
-                    <input type='text' onChange={titleChangeHandler} />
+                    <input type='text' value={enteredTitle} onChange={titleChangeHandler} />
                 </div>
                 <div className='new-expense__control'>
                     <label>Amount</label>
-                    <input type='number' min='0.01' step='0.01' onChange={amountChangeHandler} />
+                    <input type='number' value={enteredAmount} min='0.01' step='0.01' onChange={amountChangeHandler} />
                 </div>
                 <div className='new-expense__control'>
                     <label>Date</label>
-                    <input type='date' min='2019-01-01' max='2022-12-31' onChange={dateChangeHandler} />
+                    <input type='date' value={enteredDate} min='2019-01-01' max='2022-12-31' onChange={dateChangeHandler} />
                 </div>
             </div>
             <div className='new-expense__actions'>
