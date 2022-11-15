@@ -1,44 +1,49 @@
+import React, { useState } from "react";
+
 import NewExpense from "./component/NewExpense/NewExpense";
 import Expenses from "./component/Expenses/Expenses";
 
+const DUMMY_EXPENSES = [
+  {
+    id: "e1",
+    title: "Toilet Paper",
+    amount: 294.67,
+    date: new Date(2021, 8, 13),
+  },
+  {
+    id: "e2",
+    title: "New Tv",
+    amount: 799.49,
+    date: new Date(2021, 3, 11),
+  },
+  {
+    id: "e3",
+    title: "Car Insurance",
+    amount: 294.67,
+    date: new Date(2021, 3, 27),
+  },
+  {
+    id: "e4",
+    title: "New Dexk(Wooden)",
+    amount: 450,
+    date: new Date(2021, 6, 11),
+  },
+  {
+    id: "e5",
+    title: "Mac Book",
+    amount: 2499,
+    date: new Date(2021, 12, 21),
+  },
+];
+
 const App= () => {
-  const expenses = [
-    {
-      id: "e1",
-      title: "Toilet Paper",
-      amount: 294.67,
-      date: new Date(2021, 8, 13),
-    },
-    {
-      id: "e2",
-      title: "New Tv",
-      amount: 799.49,
-      date: new Date(2021, 3, 11),
-    },
-    {
-      id: "e3",
-      title: "Car Insurance",
-      amount: 294.67,
-      date: new Date(2021, 3, 27),
-    },
-    {
-      id: "e4",
-      title: "New Dexk(Wooden)",
-      amount: 450,
-      date: new Date(2021, 6, 11),
-    },
-    {
-      id: "e5",
-      title: "Mac Book",
-      amount: 2499,
-      date: new Date(2021, 12, 21),
-    },
-  ];
+ const [expenses, setExpenses]= useState(DUMMY_EXPENSES);
 
   const addExpenseHandler = expense => {
-    console.log('In App.js');
-    console.log(expense);
-  }
+    setExpenses(prevExpenses => {
+      return [expense, ...prevExpenses];
+    });
+  };
 
   // 명령형 접근 방식
   // const para = document.createElement('p');
