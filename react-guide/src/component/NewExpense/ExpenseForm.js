@@ -57,9 +57,9 @@ const ExpenseForm = (props) => {
 
         const expenseData = {
             title: enteredTitle,
-            amount: enteredAmount,
-            date: new Date(enteredDate)
-        }
+            amount: +enteredAmount,
+            date: new Date(enteredDate),
+          };
 
         // console.log(expenseData);
         props.onSaveExpenseData(expenseData); // NewExpense.js 에서 보낸 onSaveExpenseData가 여기서 실행된다
