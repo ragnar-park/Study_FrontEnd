@@ -2,4 +2,5 @@ package-lock.json
 react-guide/node_modules/
 starting-setup/node_modules/
 react-style-components/node_modules/
+react-practice-project/node_modules/
 .idea/
