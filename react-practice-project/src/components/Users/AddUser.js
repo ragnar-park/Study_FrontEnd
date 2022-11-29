@@ -46,7 +46,7 @@ const AddUser = props => {
     }
 
     return (
-    <Wrapper>
+    <>
         {error &&(
             <ErrorModal 
                 title={error.title} 
@@ -63,7 +63,7 @@ const AddUser = props => {
                 <Button type="submit">Add User</Button>
             </form>
         </Card>    
-    </Wrapper>
+    </>
     )
 };
 
