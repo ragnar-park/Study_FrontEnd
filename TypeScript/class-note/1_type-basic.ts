@@ -9,7 +9,7 @@ let num: number = 10;
 
 // TS 배열
 let arr: Array<number> = [1, 2, 3];
-let heroes: Array<string> = ["Capt", "Thor", "Hulk", 10];
+// let heroes: Array<string> = ["Capt", "Thor", "Hulk", 10];  // 오류
 let items: number[] = [1, 2, 3];
 
 // TS 튜플
