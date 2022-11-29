@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "noImplicitAny": false
+    "noImplicitAny": true // true일 경우 타입스크립트에서 자바스크립트로 변환할떼 에러가 남아있으면 컴파일되지 않음
   },
   "include": ["./src/**/*"]
 }
