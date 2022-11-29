@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "allowJs": true, // 프로잭트안에 자바스크립트 허용여부
+    "checkJs": true, // 타입스크립트의 기능을 자바스크립트에서 활용여부
+    "noImplicitAny": true // 모든타입에 대해 any로 기본타입을 부여할건지
+  }
+}
