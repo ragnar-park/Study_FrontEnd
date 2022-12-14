@@ -104,4 +104,11 @@ class AddressBook {
   /* ------------------------------------------------ */
 }
 
+let div = document.querySelector('.container') as HTMLDivElement;
+if (div) {
+  div.innerText; // div값이 존재하는지 보장 할 수 없기 때문에 보장하는 작업이 필요하다
+  // 이때 as를 사용하여 타입을 단언 시켜서 보장한다.
+  // 즉 타입 단업은 타입스크립트보다 코드를 작성한 개발자가 타입을 확신한다고 판단하여 타입을 단언 시키는 것
+}
+
 new AddressBook();
