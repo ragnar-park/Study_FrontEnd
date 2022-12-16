@@ -24,3 +24,17 @@ if ((park as Developer).skill) {
     var age = (park as Person).age;
     console.log(age);
 }
+
+// 타입 가드 정의
+function isDeveloper(target: Developer | Person): target is Developer {
+    return (target as Developer).skill !== undefined;
+}
+
+if (isDeveloper(park)) {
+    // Developer 타입
+    park.skill
+} else {
+    //  Person 타입
+    park.age
+    // park.skil // 에러
+}
