@@ -1,5 +1,3 @@
-//@ts-check
-
 // utils
 function $(selector) {
   return document.querySelector(selector);
@@ -38,16 +36,6 @@ function createSpinnerElement(id) {
 let isDeathLoading = false;
 let isRecoveredLoading = false;
 
-/**
- * @typedef {object} CovidSummary
- * @property {Array<object>} Country
- */
-
-// api
-/**
- * 
- * @returns {Promise<CovidSummary>}
- */
 function fetchCovidSummary() {
   const url = 'https://api.covid19api.com/summary';
   return axios.get(url);
@@ -55,12 +43,6 @@ function fetchCovidSummary() {
 fetchCovidSummary().then(res => {
   console.log(res.Country);
 })
-
-function fetchCountryInfo(countryCode, status) {
-  // params: confirmed, recovered, deaths
-  const url = `https://api.covid19api.com/country/${countryCode}/status/${status}`;
-  return axios.get(url);
-}
 
 // methods
 function startApp() {
