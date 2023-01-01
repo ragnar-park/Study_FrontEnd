@@ -72,6 +72,11 @@ function fetchCovidSummary() {
 fetchCovidSummary().then(function (res) {
     console.log(res.Country);
 });
+function fetchCountryInfo(countryCode, status) {
+    // params: confirmed, recovered, deaths
+    var url = "https://api.covid19api.com/country/".concat(countryCode, "/status/").concat(status);
+    return axios.get(url);
+}
 // methods
 function startApp() {
     setupData();
