@@ -42,6 +42,7 @@ function getUnixTimestamp(date) {
     return new Date(date).getTime();
 }
 // DOM
+var a;
 var confirmedTotal = $('.confirmed-total');
 var deathsTotal = $('.deaths');
 var recoveredTotal = $('.recovered');
@@ -72,8 +73,14 @@ function fetchCovidSummary() {
 fetchCovidSummary().then(function (res) {
     console.log(res.Country);
 });
+var CovidStatus;
+(function (CovidStatus) {
+    CovidStatus["Confirmed"] = "confirmed";
+    CovidStatus["Recovered"] = "recovered";
+    CovidStatus["Deaths"] = "deaths";
+})(CovidStatus || (CovidStatus = {}));
 function fetchCountryInfo(countryCode, status) {
-    // params: confirmed, recovered, deaths
+    // status params: confirmed, recovered, deaths
     var url = "https://api.covid19api.com/country/".concat(countryCode, "/status/").concat(status);
     return axios.get(url);
 }
@@ -106,13 +113,13 @@ function handleListClick(event) {
                     clearRecoveredList();
                     startLoadingAnimation();
                     isDeathLoading = true;
-                    return [4 /*yield*/, fetchCountryInfo(selectedId, 'deaths')];
+                    return [4 /*yield*/, fetchCountryInfo(selectedId, CovidStatus.Deaths)];
                 case 1:
                     deathResponse = (_a.sent()).data;
-                    return [4 /*yield*/, fetchCountryInfo(selectedId, 'recovered')];
+                    return [4 /*yield*/, fetchCountryInfo(selectedId, CovidStatus.Recovered)];
                 case 2:
                     recoveredResponse = (_a.sent()).data;
-                    return [4 /*yield*/, fetchCountryInfo(selectedId, 'confirmed')];
+                    return [4 /*yield*/, fetchCountryInfo(selectedId, CovidStatus.Confirmed)];
                 case 3:
                     confirmedResponse = (_a.sent()).data;
                     endLoadingAnimation();
