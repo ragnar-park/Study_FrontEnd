@@ -1,3 +1,6 @@
+import axios from 'axios';
+import * as Chart from 'chart.js'; // 타입 정의가 필요한 라이브러리
+
 // utils
 function $(selector: string) {
   return document.querySelector(selector);
