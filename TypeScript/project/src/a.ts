@@ -14,5 +14,5 @@ interface Hero {
 // hulk.name = 'hulk';
 // hulk.skill = 'power';
 
-const a: string | null;
-a!; // 널 타입 단언, 보이지 않는 오류 발생 가능성 높아짐
+// const a: string | null;
+// a!; // 널 타입 단언, 보이지 않는 오류 발생 가능성 높아짐
