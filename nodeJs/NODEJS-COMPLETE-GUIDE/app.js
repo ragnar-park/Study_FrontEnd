@@ -24,9 +24,12 @@ const shopRoutes = require('./routes/shop')
 // 요청 본문 분석 미들웨어
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use(adminRoutes);
+app.use('/admin',adminRoutes);
 app.use(shopRoutes);
 
+app.use((req,res,next) => {
+    res.status(404).send('<h1>Page not found</h1>');
+});
 
 // express에서 내부적으로 동일한 작업을 수행
 // const server = http.createServer(app);
