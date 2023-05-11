@@ -1,11 +1,17 @@
+const path = require('path');
 const express = require('express');
 
 const router = express.Router();
 
 // /admin/add-product => GET 
 router.get('/add-product',(req, res, next) => {
-    console.log('In another middleware!');
-    res.send('<form action="/admin/add-product" method="POST"><input type="text" name="title"><button type="submit">제출</button></form>'); 
+    res.sendFile(path.join(__dirname,'../','views','add-product.html'));
+    // __dirname으로 파일의 경로를 읽음
+    // 한 단계 올라가서 views로 들어감
+    // add-product.html 서비스함
+
+    // console.log('In another middleware!');
+    // res.send('<form action="/admin/add-product" method="POST"><input type="text" name="title"><button type="submit">제출</button></form>'); 
     // next(); 하나의 요청만 보낼 수 있다. 
 });
 

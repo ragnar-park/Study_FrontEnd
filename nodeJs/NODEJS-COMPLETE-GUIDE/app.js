@@ -1,3 +1,4 @@
+const path = require('path');
 
 /* express */
 const http = require('http');
@@ -28,7 +29,7 @@ app.use('/admin',adminRoutes);
 app.use(shopRoutes);
 
 app.use((req,res,next) => {
-    res.status(404).send('<h1>Page not found</h1>');
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 });
 
 // express에서 내부적으로 동일한 작업을 수행
