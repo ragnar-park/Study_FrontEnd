@@ -24,6 +24,7 @@ const shopRoutes = require('./routes/shop')
 
 // 요청 본문 분석 미들웨어
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, 'public'))) // 정적으로 읽기 전용 권한 및 엑세스 허용
 
 app.use('/admin',adminRoutes);
 app.use(shopRoutes);
