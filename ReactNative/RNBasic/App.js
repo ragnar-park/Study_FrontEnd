@@ -4,13 +4,17 @@ import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
 export default function App() {
 
   const [enteredGoalText, setEnteredGoalText] = useState('');
+  const [courseGoals, setCourseGoals] = useState([]);
 
   const goalInputHandler = (enteredText) => {
     setEnteredGoalText(enteredText);
   };
 
   const addGoalHandler = () => {
-    console.log(enteredGoalText);
+    // 새 상태가 이전 상태에 의존하는 방법
+    // setCourseGoals([...courseGoals, enteredGoalText]);
+    //  상태 업데이트가 비동기적으로 처리되는 상황에서 이전 상태를 보장하는 방법
+    setCourseGoals(courrentCourseGoals => [...courrentCourseGoals, enteredGoalText]);
   };
 
   return (
@@ -21,7 +25,9 @@ export default function App() {
         <Button onPress={addGoalHandler} title='Add Goal'/>
       </View>
       <View style={styles.goalsContainer}>
-        <Text>List of goals...</Text>
+       {courseGoals.map((goal) => 
+          <Text key={goal}>{goal}</Text>
+       )}
       </View>
     </View>
   );
