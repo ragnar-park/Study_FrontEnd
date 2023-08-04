@@ -1,17 +1,29 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, FlatList} from 'react-native';
+import { StyleSheet, View, FlatList, Button} from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
 
 export default function App() {
 
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseGoals, setCourseGoals] = useState([]);
+
+  const startAddGoalHandler = () => {
+    setModalIsVisible(true);
+  };
+
+  const endAddGoalHandler = () => {
+    setModalIsVisible(false);
+  }
 
   const addGoalHandler = (enteredGoalText) => {
     // 새 상태가 이전 상태에 의존하는 방법
     // setCourseGoals([...courseGoals, enteredGoalText]);
     //  상태 업데이트가 비동기적으로 처리되는 상황에서 이전 상태를 보장하는 방법
     setCourseGoals(currentCourseGoals => [...currentCourseGoals, {text: enteredGoalText, id: Math.random().toString()}]);
+    endAddGoalHandler();
   };
 
   const deleteGoalHandler = (id) => {
@@ -21,22 +33,30 @@ export default function App() {
   };
 
   return (
-    <View style={styles.appContainer}>
-        <GoalInput  onAddGoal={addGoalHandler}/>
-      <View style={styles.goalsContainer}>
-      {/* <ScrollView alwaysBounceVertical={false}> */}
-      <FlatList 
-        data={courseGoals} 
-        renderItem={(itemData) => {
-          return <GoalItem text={itemData.item.text} id={itemData.item.id} onDeleteItem={deleteGoalHandler}/>;
+    <>
+      <StatusBar style='light'/>
+      <View style={styles.appContainer}>
+        <Button 
+          title='Add New Goal' 
+          color='#a065ec'
+          onPress={startAddGoalHandler}
+        />
+        <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} onCancel={endAddGoalHandler}/>
+        <View style={styles.goalsContainer}>
+        {/* <ScrollView alwaysBounceVertical={false}> */}
+        <FlatList 
+          data={courseGoals} 
+          renderItem={(itemData) => {
+            return <GoalItem text={itemData.item.text} id={itemData.item.id} onDeleteItem={deleteGoalHandler}/>;
+          }}
+        keyExtractor={(item, index) => {
+          return item.id;
         }}
-       keyExtractor={(item, index) => {
-        return item.id;
-       }}
-       alwaysBounceVertical={false} />
-      {/* </ScrollView> */}
+        alwaysBounceVertical={false} />
+        {/* </ScrollView> */}
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -45,9 +65,9 @@ const styles = StyleSheet.create({
   appContainer: {
     flex:1,
     paddingTop: 50,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   goalsContainer: {
-    flex: 4,
+    flex: 5,
   },
 });
