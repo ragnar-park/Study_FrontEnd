@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList} from 'react-native';
 
 export default function App() {
 
@@ -14,7 +14,7 @@ export default function App() {
     // 새 상태가 이전 상태에 의존하는 방법
     // setCourseGoals([...courseGoals, enteredGoalText]);
     //  상태 업데이트가 비동기적으로 처리되는 상황에서 이전 상태를 보장하는 방법
-    setCourseGoals(courrentCourseGoals => [...courrentCourseGoals, enteredGoalText]);
+    setCourseGoals(courrentCourseGoals => [...courrentCourseGoals, {text: enteredGoalText, id: Math.random().toString()}]);
   };
 
   return (
@@ -25,13 +25,21 @@ export default function App() {
         <Button onPress={addGoalHandler} title='Add Goal'/>
       </View>
       <View style={styles.goalsContainer}>
-      <ScrollView alwaysBounceVertical={false}>
-       {courseGoals.map((goal) => 
-          <View key={goal} style={styles.goalItem}> 
-           <Text style={styles.goalText}>{goal}</Text>
-          </View>
-       )}
-      </ScrollView>
+      {/* <ScrollView alwaysBounceVertical={false}> */}
+      <FlatList 
+        data={courseGoals} 
+        renderItem={(itemData) => {
+          return (
+            <View style={styles.goalItem}> 
+              <Text style={styles.goalText}>{itemData.item.text}</Text>
+            </View>
+          );
+        }}
+       keyExtractor={(item, index) => {
+        return item.id;
+       }}
+       alwaysBounceVertical={false} />
+      {/* </ScrollView> */}
       </View>
     </View>
   );
