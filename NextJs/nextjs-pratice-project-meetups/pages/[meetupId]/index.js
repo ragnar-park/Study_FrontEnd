@@ -1,13 +1,14 @@
+import { MongoClient, ObjectId } from "mongodb";
 import { Fragment } from "react"
 import MeetupDetail from '../../components/meetups/MeetupDetail'
 
 // our-domain.com/[meetupid]
-const MeetupDetails = () => {
+const MeetupDetails = (props) => {
     return (<MeetupDetail 
-        image="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg"
-        title="First Meetup"
-        address="Some Street 5, Soxme City"
-        description="This is a first meetup"
+        image={props.meetupData.image}
+        title={props.meetupData.title}
+        address={props.meetupData.address}
+        description={props.meetupData.description}
     />);
 };
 
@@ -21,21 +22,20 @@ export const getStaticPaths = async () =>{
     // 이 말은 곧 NextJs가 페이지가 지원하는 모든 Id에 대해 사전에 해당 동적 페이지의 모든 버전을 사전 생성해야 한다는 것임
     // 동적 페이지이기 때문에 어떤 id 값에 대한 페이지가 사전 생성되어야 하는지를 알아야 함 
     // 그렇지 않으면 해당 페이지를 사전 생성 할 수 없음, 사전 생성되지 않은 id를 URL에 입력한다면 404에러 
+
+    const client = await MongoClient.connect('mongodb+srv://ragnar-next-learn:1234qwer@clusternextlearn.hcwwwir.mongodb.net/meetups?retryWrites=true&w=majority');
+    const db = client.db();
+
+    const meetupsCollection = db.collection('meetups');
+
+    const meetups = await meetupsCollection.find({}, {_id: 1}).toArray();
+
+    client.close();
+
     return {
         fallback: false, // 지원하는 매개변수 값이 모두 있는지 혹은 일부만 있는지를 알려 줌, false가 모두 있다는 의미
         // 실제 서비스라면 api등을 통해 동적으로 배열을 생성하도록 지정
-        paths: [
-            { 
-                params: {
-                    meetupId: 'm1',
-                } 
-            },
-            { 
-                params: {
-                    meetupId: 'm2',
-                } 
-            }
-        ]
+        paths: meetups.map(meetup => ({ params: {meetupId: meetup._id.toString() }}))
     }
 };
 
@@ -43,17 +43,26 @@ export const getStaticProps = async (context) => {
     
     const meetupId = context.params.meetupId;
 
-    console.log(meetupId);
+    const client = await MongoClient.connect('mongodb+srv://ragnar-next-learn:1234qwer@clusternextlearn.hcwwwir.mongodb.net/meetups?retryWrites=true&w=majority');
+    const db = client.db();
+
+    const meetupsCollection = db.collection('meetups');
+
+    const selectedMeetup = await meetupsCollection.findOne({ 
+        _id: new ObjectId(meetupId)
+    });
+
+    client.close();
 
     return {
         props: {
             meetupData: {
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jp',
-                id: meetupId,
-                title: 'First Meetup',
-                address: 'Some Street 5, Soxme City',
-                description: 'This is a first meetup'
-            }
+                id: selectedMeetup._id.toString(),
+                title: selectedMeetup.title,
+                address: selectedMeetup.address,
+                image: selectedMeetup.image,
+                description: selectedMeetup.description,
+            },
         }
     }
 };
