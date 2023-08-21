@@ -1,15 +1,23 @@
 import { MongoClient, ObjectId } from "mongodb";
-import { Fragment } from "react"
+import { Fragment } from "react";
+import Head from 'next/head';
 import MeetupDetail from '../../components/meetups/MeetupDetail'
 
 // our-domain.com/[meetupid]
 const MeetupDetails = (props) => {
-    return (<MeetupDetail 
-        image={props.meetupData.image}
-        title={props.meetupData.title}
-        address={props.meetupData.address}
-        description={props.meetupData.description}
-    />);
+    return (
+    <Fragment>
+        <Head>
+            <title>{props.meetupData.title}</title>
+            <meta name="description" content={props.meetupData.description}/>
+        </Head>
+        <MeetupDetail 
+            image={props.meetupData.image}
+            title={props.meetupData.title}
+            address={props.meetupData.address}
+            description={props.meetupData.description}
+        />
+    </Fragment>);
 };
 
 // getStaticPaths는 pages 컴포넌트 파일에서 내보내야 하는 함수로,

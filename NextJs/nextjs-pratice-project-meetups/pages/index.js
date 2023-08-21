@@ -1,5 +1,8 @@
 // our-domain.com/
 
+import { Fragment } from 'react';
+import Head from 'next/head';
+
 /*
  pages 컴포넌트 파일에 임포트 할때 그것이 getServerSideProps, getStaticProps 에서만 쓰이면 
  임포트된 패키지는 클라이언트 사이드 번들에 포함되지 않는다
@@ -37,7 +40,15 @@ const HomePage = (props) => {
     // },[]);
 
     return (
-        <MeetupList meetups={props.meetups} />
+        <Fragment>
+            <Head>
+                <title>React Meetups</title>
+
+                {/* 검색 엔진의 결과에서 표시될 때 나타나는 텍스트 */}
+                <meta name="desciption" content="Browse a huge list of highly active React meetups!"/>
+            </Head>
+            <MeetupList meetups={props.meetups} />
+        </Fragment>
     );
 };
 

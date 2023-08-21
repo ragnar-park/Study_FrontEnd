@@ -1,5 +1,6 @@
 // our-domain.com/new-meetup
-
+import { Fragment } from "react";
+import Head from 'next/head';
 import { useRouter } from "next/router";
 import NewMeetupForm from "../../components/meetups/NewMeetupForm";
 
@@ -24,8 +25,16 @@ const NewMeetupPage = () => {
     }
     
     return (
-        <NewMeetupForm onAddMeetup={addMeetupHandler}
-        />
+        <Fragment>
+            <Head>
+                <title>Add a new Meetup</title>
+
+                {/* 검색 엔진의 결과에서 표시될 때 나타나는 텍스트 */}
+                <meta name="desciption" content="Add your own meetups and create amazing networking opportunities."/>
+            </Head>
+            <NewMeetupForm onAddMeetup={addMeetupHandler}
+            />
+        </Fragment>
     );
 }
 
