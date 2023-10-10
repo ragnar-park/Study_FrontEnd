@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import SubLayout from "@/components/SubLayout";
 
 // [...code].js  -> Catch - All route
 // country 경로 뒤에 오는 모든 경로를 해당 파일이 잡아 오게됨
@@ -14,3 +15,5 @@ export default function Country() {
 
     return (<div>Country {code}</div>)
 };
+
+Country.Layout = SubLayout;
