@@ -1,6 +1,7 @@
 import {useEffect} from "react";
+import {fetchCountries} from "@/api";
 
-export default function Home({name}) {
+export default function Home({countries}) {
     // SSR로 설정시 한번은 서버에서 동작하기 때문에 브라우저에서 사용하는 윈도우 객체를 사용할 수 없음
     // window.location
     // 서버에서 랜더링을 하기 위 한번 먼저 실행 후
@@ -13,25 +14,38 @@ export default function Home({name}) {
     });
 
     return (
-        <div>{name}</div> // getServerSideProps으로 인해 사전에 세팅된 props 즉 KOREA가 출력
+        <div>
+            {countries.map((country) => <div key={country.code}>{country.commonName}</div>)}
+        </div>
+        // <div>{name}</div> // getServerSideProps으로 인해 사전에 세팅된 props 즉 KOREA가 출력
     )
 }
 
 export const getServerSideProps = async () => {
+    // API 호출 하여 SSR 적용
+
+    const countries = await fetchCountries();
+
+    return {
+        props: {
+            countries,
+        },
+    }
+
     // SSR을 위해서 서버측에서 페이지 컴포넌트에게 전달할 데이터를 설정하는 함수
 
     // 서버측에서만 실행이 됨으로
     // 아래 콘솔이 브라우저에서는 출력되지 않음
     // 브라우저에서 사용하는 윈도우 객체도 사용할 수 없음
-    console.log("getServerSideProps");
+    // console.log("getServerSideProps");
 
     // 반드시 객체를 반환
     // 필수값 props: {객체}
-    return {
-        props: {
-            name: "KOREA",
-        },
-    }
+    // return {
+    //     props: {
+    //         name: "KOREA",
+    //     },
+    // }
 };
 
 // import Link from "next/link"; // 리엑트
