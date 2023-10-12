@@ -21,9 +21,20 @@ export default function Home({countries}) {
     )
 }
 
-export const getServerSideProps = async () => {
-    // API 호출 하여 SSR 적용
+// SSG 방식
+// 페이지를 서버측에서 랜더링함
+// SSR과 다르게 빌드 타임에만 딱 한번 실행됨
+// 만들어진 html을 전달만 하기 때문에 굉장히 빠른 속도로 화면에 노출된다.
+export const getStaticProps = async () => {
+    // 개발모드에서는 SSG의 동작을 확인 하기 어려움
+    // 편리한 개발을 위해 코드 수정이 되었을때 바로 반응되게 하가 위해 ssr,ssg 상관 없이 처음부터 다시 페이지를 만듬
 
+    // npm run build시 페이지별 렌더링 방식을 확인할 수 있음
+    // 페이지 옆 기호로 알 수 있는 렌더링 정보
+    //  ● : SSG 방식으로 동작함
+    //  ○ : 페이지에 별도의 렌더링 방식을 지정하지 않은 것으로 데이터를 불러오지 않는 SSG임을 나타댐
+    // 즉 디폴트 렌더링 방식은 데이터를 불러오지 않는 SSG방식이다
+    //  λ : SSR 방식으로 동작함
     const countries = await fetchCountries();
 
     return {
@@ -31,6 +42,18 @@ export const getServerSideProps = async () => {
             countries,
         },
     }
+
+// SSR 방식
+// export const getStatic = async () => {
+//     // API 호출 하여 SSR 적용
+//
+//     const countries = await fetchCountries();
+//
+//     return {
+//         props: {
+//             countries,
+//         },
+//     }
 
     // SSR을 위해서 서버측에서 페이지 컴포넌트에게 전달할 데이터를 설정하는 함수
 
