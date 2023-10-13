@@ -14,6 +14,16 @@ export default function Country({country}) {
     const router = useRouter();
     const {code} = router.query;
 
+    // 데이터가 없는 컴포넌트를 반환할때 노출 됨
+    // if(!country) {
+    //     return <div>존재하지 않는 국가입니다.</div>
+    // }
+
+    // 위 데이터가 없는 fallback 상태의 처리를 더 명시적으로
+    if (router.isFallback) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div>
             {country.commonName} | {country.officialName}
@@ -30,7 +40,17 @@ export const getStaticPaths = async () => {
           { params : {code : 'ABW'}},
           { params: {code : 'KOR'}}
       ],
-      fallback: false, // paths에 설정하지 않은 경로 접근 404페이지 반환
+      fallback: true, // 빌드 타임에 생성하지 않 는 페이지도 제공 하면서 사용자에게 우선 데이터 없는 상태의 페이지를 줌
+      //  사용자에게 우선 데이터 없는 상태의 페이지 -> fallback
+      // 현재 컴포넌트 기준으로 존재하지 않는 국가입니다 (데이터 없는 페이지)가 잠깐 노출되었다가 요청한 code의 페이지가 노출됨 -> 뒤늦게 데이터만 전달달
+      // 페이지 자체는 빠르게 보여줄 수 있음
+      // 새로 고침과 같이 해당 페이지를 다시 요청할 경우 생성된 페이지를 반환하게됨
+
+      // fallback: 'blocking', // 실시간으로 페이지가 생성되어 반환, 새로고침을 하게되면 새로 생성하는 것이 아닌 생성되었던 파일을 사용함(기존 ssg)
+      // 존재하지 않는 페이지를 달라는 요청을 하게되면 실시간으로 페이지를 만들어 반환
+      // 페이지를 만드는 동안은 브라우저는 계속 로딩상태
+
+      // fallback: false, // paths에 설정하지 않은 경로 접근 404페이지 반환
   }
 };
 
