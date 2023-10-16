@@ -61,6 +61,7 @@ export const getStaticProps = async (context) => {
     // 접근 가능한 경로에 해당하는 페이지들 모두 생성해야 함
 
     const {code} = context.params
+    console.log(`${code} 생성!`)
 
     let country = null;
     if(code) {
@@ -70,6 +71,7 @@ export const getStaticProps = async (context) => {
     return {
         props: {
             country
-        }
+        },
+        revalidate : 3, // ISR (중분 정적 재생성)
     }
 }
