@@ -1,5 +1,7 @@
 import {useEffect} from "react";
 import {fetchCountries} from "@/api";
+import Searchbar from "@/components/Searchbar";
+import CountryList from "@/components/CountryList";
 
 export default function Home({countries}) {
     // SSR로 설정시 한번은 서버에서 동작하기 때문에 브라우저에서 사용하는 윈도우 객체를 사용할 수 없음
@@ -14,9 +16,10 @@ export default function Home({countries}) {
     });
 
     return (
-        <div>
-            {countries.map((country) => <div key={country.code}>{country.commonName}</div>)}
-        </div>
+        <>
+            <Searchbar />
+            <CountryList countries={ countries }/>
+        </>
         // <div>{name}</div> // getServerSideProps으로 인해 사전에 세팅된 props 즉 KOREA가 출력
     )
 }
