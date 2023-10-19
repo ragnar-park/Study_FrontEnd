@@ -2,6 +2,7 @@ import {useEffect} from "react";
 import {fetchCountries} from "@/api";
 import Searchbar from "@/components/Searchbar";
 import CountryList from "@/components/CountryList";
+import Head from "next/head";
 
 export default function Home({countries}) {
     // SSR로 설정시 한번은 서버에서 동작하기 때문에 브라우저에서 사용하는 윈도우 객체를 사용할 수 없음
@@ -17,6 +18,17 @@ export default function Home({countries}) {
 
     return (
         <>
+            <Head>
+                <title>NARAS</title>
+                <meta
+                    property="og:image"
+                    content="NARAS"
+                />
+                <meta
+                    property="og:description"
+                    content="전 세계 국가들의 정보를 확인해보세과"
+                />
+            </Head>
             <Searchbar />
             <CountryList countries={ countries }/>
         </>

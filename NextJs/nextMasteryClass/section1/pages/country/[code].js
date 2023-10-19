@@ -3,6 +3,7 @@ import SubLayout from "@/components/SubLayout";
 import {fetchCountry} from "@/api";
 import style from './[code].module.css'
 import Image from "next/image";
+import Head from "next/head";
 
 // [...code].js  -> Catch - All route
 // country 경로 뒤에 오는 모든 경로를 해당 파일이 잡아 오게됨
@@ -17,48 +18,69 @@ export default function Country({country}) {
     const {code} = router.query;
 
     // 데이터가 없는 컴포넌트를 반환할때 노출 됨
-    // if(!country) {
-    //     return <div>존재하지 않는 국가입니다.</div>
-    // }
+    if(!country) {
+        return <div>존재하지 않는 국가입니다.</div>
+    }
 
     // 위 데이터가 없는 fallback 상태의 처리를 더 명시적으로
     if (router.isFallback) {
-        return <div>Loading...</div>;
+        return <>
+            <Head>
+                <title>NARAS</title>
+                <meta
+                    property="og:image"
+                    content="NARAS"
+                />
+                <meta
+                    property="og:description"
+                    content="전 세계 국가들의 정보를 확인해보세과"
+                />
+            </Head>
+            Loading...
+        </>;
     }
 
     return (
-        <div className={style.container}>
-            <div className={style.header}>
-                <div className={style.commonName}>
-                    {country.flagEmoji}&nbsp;{country.commonName}
+        <>
+            <Head>
+                <title>{country.commonName} 국가 정보 조회 | NARAS</title>
+                <meta property="og:image" content={country.flagImg}/>
+                <meta property="og:title" content={`${country.commonName} 국가 정보 조회 | NARAS`}/>
+                <meta property="og:description" content={`${country.commonName} 국가의 자세한 정보입니다`}/>
+            </Head>
+            <div className={style.container}>
+                <div className={style.header}>
+                    <div className={style.commonName}>
+                        {country.flagEmoji}&nbsp;{country.commonName}
+                    </div>
+                    <div className={style.officialName}>
+                        {country.officialName}
+                    </div>
                 </div>
-                <div className={style.officialName}>
-                    {country.officialName}
-                </div>
-            </div>
 
-            <div className={style.flag_img}>
-                <Image src={country.flagImg} fill />
-            </div>
+                <div className={style.flag_img}>
+                    <Image src={country.flagImg} fill />
+                </div>
 
-            <div className={style.body}>
-                <div>
-                    <b>코드 :</b>&nbsp;{country.code}
-                </div>
-                <div>
-                    <b>수도 :</b>&nbsp;{country.capital.join(", ")}
-                </div>
-                <div>
-                    <b>지역 :</b>&nbsp;{country.region}
-                </div>
-                <div>
-                    <b>지도 :</b>&nbsp;
-                    <a target="_blank" href={country.googleMapURL}>
-                        {country.googleMapURL}
-                    </a>
+                <div className={style.body}>
+                    <div>
+                        <b>코드 :</b>&nbsp;{country.code}
+                    </div>
+                    <div>
+                        <b>수도 :</b>&nbsp;{country.capital.join(", ")}
+                    </div>
+                    <div>
+                        <b>지역 :</b>&nbsp;{country.region}
+                    </div>
+                    <div>
+                        <b>지도 :</b>&nbsp;
+                        <a target="_blank" href={country.googleMapURL}>
+                            {country.googleMapURL}
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

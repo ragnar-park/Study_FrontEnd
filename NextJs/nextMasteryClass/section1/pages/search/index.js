@@ -4,6 +4,7 @@ import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import Searchbar from "@/components/Searchbar";
 import CountryList from "@/components/CountryList";
+import Head from "next/head";
 
 export default function Search() {
 
@@ -27,6 +28,17 @@ export default function Search() {
 
   return (
       <>
+          <Head>
+              <title>NARAS 검색 결과</title>
+              <meta
+                  property="og:image"
+                  content="NARAS"
+              />
+              <meta
+                  property="og:description"
+                  content="전 세계 국가들의 정보를 확인해보세과"
+              />
+          </Head>
           <Searchbar q={q}/>
           <CountryList countries={countries} />
       </>
