@@ -34,11 +34,25 @@ test('initial conditions', () => {
   const colorButton = screen.getByRole('button', {name: 'Change to blue'});
   expect(colorButton).toBeEnabled();
 
-  // 체크 박스 요소를 찾고 체크되지 않은 상태로 시작되었는지 테스트
+  // 체크 박스 요소를 찾고 체크되지 않은 상태로 시작되었는지 테스
   const checkbox = screen.getByRole('checkbox');
   expect(checkbox).not.toBeChecked();
 });
 
+test('Checkbox disables button on first click and enables on second click', () => {
+  render(<App />);
+  const checkbox = screen.getByRole('checkbox');
+  const button = screen.getByRole('button');
+
+
+  // button 요소가 사용 불가능하고(disabled) 비활성화되어 있는지 테스트
+  fireEvent.click(checkbox);
+  expect(button).toBeDisabled();
+
+  // button 요소가 사용 가능하고 활성화되어 있는지 테스트
+  fireEvent.click(checkbox);
+  expect(button).toBeEnabled();
+});
 // 버튼을 클릭하면 파란색으로 변경되는지 테스트
 // test('button turns blue when clicked', () => {
 //   render(<App />);
