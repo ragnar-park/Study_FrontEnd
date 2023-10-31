@@ -1,0 +1,9 @@
+// package.json이나 eslint 구성 파일 둘 중 하나에만 존재하면 됨
+{
+  "plugins": ["jest-dom"],
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "plugin:jest-dom/recommended"
+  ]
+}
